@@ -52,6 +52,7 @@ async function handleRequest(req, res) {
   catch { res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' }); res.end('Not found'); }
 }
 const preferredPort = Number(process.env.PORT || 4173);
+console.log(`[ClearCare] AMD Token Factory explanations: ${process.env.RADEON_API_KEY ? 'RADEON_API_KEY is configured (value hidden).' : 'RADEON_API_KEY is NOT configured; real AMD requests will not be sent.'}`);
 function configure(server) {
   server.requestTimeout = 20_000;
   server.headersTimeout = 25_000;

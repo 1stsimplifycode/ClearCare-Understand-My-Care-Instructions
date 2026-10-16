@@ -36,10 +36,10 @@ test('duplicate simultaneous requests share one provider call', async () => {
   const [ra, rb] = await Promise.all([a, b]); assert.equal(calls, 1); assert.equal(ra.explanation, rb.explanation);
 });
 
-test('ambiguous source is escalated without a model call', async () => {
-  let calls = 0;
-  const result = await explainInstruction({ instruction: 'Take insulin 8 (unit missing) before dinner.' }, { apiKey: 'test-secret', fetchImpl: async () => { calls++; return ok('guess'); } });
-  assert.equal(calls, 0); assert.equal(result.clarificationNeeded, true); assert.match(result.explanation, /unclear|clarify/i);
+test('ambiguous source still sends one AMD request and prompt forbids guessing', async () => {
+  let calls = 0; let payload;
+  const result = await explainInstruction({ instruction: 'Take insulin 8 (unit missing) before dinner.' }, { apiKey: 'test-secret', fetchImpl: async (_url, options) => { calls++; payload = JSON.parse(options.body); return ok('The dose unit is missing. Ask your care team to clarify it before taking this medicine.'); } });
+  assert.equal(calls, 1); assert.equal(payload.messages[1].content, 'Take insulin 8 (unit missing) before dinner.'); assert.match(payload.messages[0].content, /never guess/i); assert.match(result.explanation, /clarify/i);
 });
 
 test('rate limit, provider failure, missing key, and timeout surface controlled errors', async () => {
