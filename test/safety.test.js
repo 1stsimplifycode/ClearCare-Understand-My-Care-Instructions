@@ -26,18 +26,29 @@ test('real upload parses PDF text in the browser without an API dependency', () 
   assert.match(app, /Image OCR is not configured/);
   assert.match(html, /Synthetic demo/);
 });
-test('home checklist uses accessible buttons and toggles completion both ways', async () => {
-  const html = await readFile(new URL('../public/index.html', import.meta.url), 'utf8');
-  assert.match(html, /data-complete="walk"[^>]*aria-pressed="true"/);
-  assert.match(html, /data-complete="call"[^>]*aria-pressed="false"/);
-  assert.match(app, /if \(completedTasks\.has\(id\)\) completedTasks\.delete\(id\); else completedTasks\.add\(id\)/);
-  assert.match(app, /button\.classList\.toggle\('checked', completedTasks\.has\(id\)\)/);
+test('home and care checklists use accessible, reversible completion controls', () => {
+  assert.match(app, /data-home-complete="\$\{esc\(item\.id\)\}"[\s\S]*?aria-pressed="\$\{done\}"/);
+  assert.match(app, /data-care-complete="\$\{esc\(item\.id\)\}"[\s\S]*?aria-pressed="\$\{done\}"/);
+  assert.match(app, /completedTasks\.has\(id\) \? completedTasks\.delete\(id\) : completedTasks\.add\(id\)/);
+  assert.match(app, /sessionStorage\.setItem\('clearcare-completed-tasks'/);
+  assert.match(app, /currentDoc\.tasks\.map\(t => t\.id\)/);
+});
+test('the dashboard shows each individual care and medication todo without truncating the list', () => {
+  const render = app.match(/function renderTodayPreview\(\) \{([\s\S]*?)\n\}/)?.[1] || '';
+  assert.match(render, /const items = checklistItems\(\)/);
+  assert.match(render, /items\.map\(item =>/);
+  assert.doesNotMatch(render, /slice\(/);
+  assert.match(app, /id: `pickup-\$\{id\}`/);
+  assert.match(app, /function medicationId\(m\)[\s\S]*?m\.id \|\| String\(m\.name/);
 });
 test('review items can mark follow-up done without changing their clinical review status', () => {
   assert.match(app, /Mark follow-up done/);
-  assert.match(app, /This tracks your follow-up only\. It does not confirm or approve the medical instruction\./);
-  assert.match(app, /sessionStorage\.setItem\('clearcare-reviewed-items'/);
-  assert.match(app, /tag-review.*NEEDS REVIEW/s);
+  assert.match(app, /completedTasks\.has\(entry\.key\)/);
+  assert.match(app, /You marked this follow-up done\. The instruction still needs review and is not confirmed\./);
+  assert.match(app, /completedTasks\.has\(item\.key\)\)\.length/);
+  assert.match(app, /tag-review">\$\{siteText\(incomplete \? 'INCOMPLETE' : 'NEEDS REVIEW'\)\}/);
+  assert.match(app, /eligible: t\.status === 'confirmed' && !t\.needsReview/);
+  assert.match(app, /data-review-done="\$\{esc\(entry\.key\)\}"[\s\S]*?aria-pressed="\$\{done\}"/);
 });
 test('dashboard explanation controls exist but no explanation request runs at page load', () => {
   assert.match(app, /Explain simply/);

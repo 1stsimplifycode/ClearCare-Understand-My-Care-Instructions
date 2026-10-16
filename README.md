@@ -57,10 +57,10 @@ The explanation is labeled separately from the original instruction and includes
 - Conflicting and missing-unit instructions remain unresolved and retain their original source text.
 - Calendar export includes only appointments marked confirmed with a date, time, and complete location. Review-needed or incomplete visits cannot be exported.
 - The extracted source text is kept separate from the plain-language summary and escaped before rendering.
-- Language settings change the plan labels in the demo; source evidence remains in its original language.
+- The care-plan checklist has one-tap completion that is shared with review follow-ups. Checking a task never clears the medical review status. Medication pickup reminders have no invented due date; only confirmed appointments with complete details export to `.ics`.
 - Use synthetic data only. Avoid uploading real medical records.
 
-This is a hackathon demo, not a medical device, clinical decision support system, or replacement for a clinician. AI extraction, OCR, AI translation, direct calendar integration, authentication, and durable storage are not implemented. Local deterministic extraction is limited and must be checked against the PDF source.
+This is a hackathon demo, not a medical device, clinical decision support system, or replacement for a clinician. AI extraction, OCR, automatic whole-site translation, direct calendar integration, real authentication, and durable patient-data storage are not implemented. The demo sign-in is local-only. Local deterministic extraction is limited and must be checked against the PDF source.
 
 ## Checks
 
@@ -71,3 +71,5 @@ node --check public/app.js
 ```
 
 The tests cover PDF text extraction from the included synthetic files, structured field extraction, source evidence, ambiguous/conflicting/missing-unit detection, high-risk escalation, unreadable content handling, schema checks, and calendar eligibility. These are fixture-based checks on the included files, including the browser-side upload reader; they do not measure general PDF accuracy, OCR, or clinical safety.
+
+- The app language selector translates the main navigation and key dashboard, care plan, review, calendar, settings, and upload interface text into English, Spanish, or Hindi. The chosen language is remembered for the Jordan demo profile in this browser. Original document text and evidence remain unchanged.
