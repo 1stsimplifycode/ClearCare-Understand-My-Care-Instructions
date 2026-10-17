@@ -1,0 +1,161 @@
+{
+  "ranAt": "2026-10-17T07:56:52.948Z",
+  "node": "22.22.0",
+  "runsPerFile": 15,
+  "rows": [
+    {
+      "file": "discharge_pdf/01_everyday_recovery.pdf",
+      "bytes": 2930,
+      "originalPipelineMs": 0.87,
+      "newIngestMs": 13.69,
+      "engineMs": 1,
+      "render3LangPlusBriefingMs": 9.11
+    },
+    {
+      "file": "discharge_pdf/02_ambiguous_dose.pdf",
+      "bytes": 2896,
+      "originalPipelineMs": 0.6,
+      "newIngestMs": 8.04,
+      "engineMs": 0.66,
+      "render3LangPlusBriefingMs": 5.11
+    },
+    {
+      "file": "discharge_pdf/03_conflicting_warfarin.pdf",
+      "bytes": 2836,
+      "originalPipelineMs": 0.36,
+      "newIngestMs": 6.69,
+      "engineMs": 0.66,
+      "render3LangPlusBriefingMs": 0.62
+    },
+    {
+      "file": "discharge_pdf/04_missing_units_insulin.pdf",
+      "bytes": 2758,
+      "originalPipelineMs": 0.44,
+      "newIngestMs": 5.65,
+      "engineMs": 0.67,
+      "render3LangPlusBriefingMs": 0.8
+    },
+    {
+      "file": "discharge_pdf/05_high_risk_apixaban.pdf",
+      "bytes": 2745,
+      "originalPipelineMs": 0.36,
+      "newIngestMs": 6.24,
+      "engineMs": 0.58,
+      "render3LangPlusBriefingMs": 2.13
+    },
+    {
+      "file": "discharge_pdf/06_unreadable_scan.pdf",
+      "bytes": 2759,
+      "originalPipelineMs": 0.29,
+      "newIngestMs": 5.8,
+      "engineMs": 0.28,
+      "render3LangPlusBriefingMs": 0.56
+    },
+    {
+      "file": "discharge_pdf_adversarial/07_medication_changes.pdf",
+      "bytes": 2626,
+      "originalPipelineMs": "failed (original parser cannot read)",
+      "newIngestMs": 7.06,
+      "engineMs": 1.6,
+      "render3LangPlusBriefingMs": 10.83
+    },
+    {
+      "file": "discharge_pdf_adversarial/08_two_page_two_column.pdf",
+      "bytes": 3025,
+      "originalPipelineMs": "failed (original parser cannot read)",
+      "newIngestMs": 10.84,
+      "engineMs": 1.43,
+      "render3LangPlusBriefingMs": 17.75
+    },
+    {
+      "file": "discharge_pdf_adversarial/09_rotated_page.pdf",
+      "bytes": 1812,
+      "originalPipelineMs": "failed (original parser cannot read)",
+      "newIngestMs": 3.87,
+      "engineMs": 0.44,
+      "render3LangPlusBriefingMs": 5.27
+    },
+    {
+      "file": "discharge_pdf_adversarial/10_scanned_image_only.pdf",
+      "bytes": 35425,
+      "originalPipelineMs": "failed (original parser cannot read)",
+      "newIngestMs": 7.57,
+      "engineMs": 0.02,
+      "render3LangPlusBriefingMs": 0.61
+    },
+    {
+      "file": "discharge_pdf_adversarial/11_password_protected.pdf",
+      "bytes": 2799,
+      "originalPipelineMs": "failed (original parser cannot read)",
+      "newIngestMs": "rejected (by design)",
+      "engineMs": null,
+      "render3LangPlusBriefingMs": null
+    },
+    {
+      "file": "discharge_pdf_adversarial/12_empty.pdf",
+      "bytes": 0,
+      "originalPipelineMs": "failed (original parser cannot read)",
+      "newIngestMs": "rejected (by design)",
+      "engineMs": null,
+      "render3LangPlusBriefingMs": null
+    },
+    {
+      "file": "discharge_pdf_adversarial/13_malformed.pdf",
+      "bytes": 92,
+      "originalPipelineMs": "failed (original parser cannot read)",
+      "newIngestMs": "rejected (by design)",
+      "engineMs": null,
+      "render3LangPlusBriefingMs": null
+    },
+    {
+      "file": "discharge_pdf_adversarial/14_prompt_injection.pdf",
+      "bytes": 1933,
+      "originalPipelineMs": "failed (original parser cannot read)",
+      "newIngestMs": 13.18,
+      "engineMs": 0.61,
+      "render3LangPlusBriefingMs": 0.88
+    },
+    {
+      "file": "discharge_pdf_adversarial/15_conflicting_appointments.pdf",
+      "bytes": 1723,
+      "originalPipelineMs": "failed (original parser cannot read)",
+      "newIngestMs": 10.72,
+      "engineMs": 0.28,
+      "render3LangPlusBriefingMs": 1.59
+    },
+    {
+      "file": "discharge_pdf_adversarial/16_dates_and_doses.pdf",
+      "bytes": 2016,
+      "originalPipelineMs": "failed (original parser cannot read)",
+      "newIngestMs": 9.04,
+      "engineMs": 1.06,
+      "render3LangPlusBriefingMs": 3.43
+    },
+    {
+      "file": "discharge_pdf_adversarial/17_table_layout.pdf",
+      "bytes": 2124,
+      "originalPipelineMs": "failed (original parser cannot read)",
+      "newIngestMs": 9.09,
+      "engineMs": 0.74,
+      "render3LangPlusBriefingMs": 6.84
+    },
+    {
+      "file": "discharge_pdf_adversarial/18_mixed_english_hindi.pdf",
+      "bytes": 5153,
+      "originalPipelineMs": "failed (original parser cannot read)",
+      "newIngestMs": 18.12,
+      "engineMs": 0.75,
+      "render3LangPlusBriefingMs": 3.71
+    },
+    {
+      "file": "discharge_pdf_adversarial/19_xss_text.pdf",
+      "bytes": 1922,
+      "originalPipelineMs": "failed (original parser cannot read)",
+      "newIngestMs": 7.86,
+      "engineMs": 0.71,
+      "render3LangPlusBriefingMs": 5
+    }
+  ],
+  "rssMB": 301.8,
+  "heapUsedMB": 28.4
+}

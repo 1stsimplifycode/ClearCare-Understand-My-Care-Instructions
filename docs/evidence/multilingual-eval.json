@@ -1,0 +1,279 @@
+{
+  "ranAt": "2026-10-17T10:21:26.870Z",
+  "summary": {
+    "items": 12,
+    "hindiSameNumbers": 12,
+    "hindiNameKept": 12,
+    "hindiVerifierPass": 10,
+    "kannadaVerified": 12,
+    "kannadaSameNumbers": 12,
+    "kannadaNameKept": 12,
+    "humanReview": "NOT DONE: no qualified Hindi or Kannada reviewer was available. Outputs are saved for review in multilingual-eval.json."
+  },
+  "rows": [
+    {
+      "source": "Acetaminophen 500 mg: Take one tablet by mouth every 6 hours as needed for pain. Do not exceed 3,000 mg in 24 hours.",
+      "en": "Take Acetaminophen 500 mg — one tablet by mouth, every 6 hours, only when you need it for pain. Do not take more than 3000 mg in 24 hours.",
+      "hi": "Acetaminophen 500 mg की एक गोली, मुँह से, हर 6 घंटे में लें — सिर्फ़ तब जब दर्द के लिए ज़रूरत हो। 24 घंटे में 3000 mg से ज़्यादा न लें।",
+      "kn": "Acetaminophen 500 mg ತೆಗೆದುಕೊಳ್ಳಿ — ಬಾಯಿಯಿಂದ ಒಂದು ಮಾತ್ರೆ, ಪ್ರತಿ 6 ಗಂಟೆಗಳಿಗೆ, ನೋವಿಗಾಗಿ ಮಾತ್ರ ಅಗತ್ಯವಿದ್ದಾಗ. 24 ಗಂಟೆಗಳಲ್ಲಿ 3000 mg ಕ್ಕಿಂತ ಹೆಚ್ಚು ತೆಗೆದುಕೊಳ್ಳಬೇಡಿ.",
+      "knStatus": "verified",
+      "facts": {
+        "numbersEn": "6,24,500,3000",
+        "numbersHi": "6,24,500,3000",
+        "numbersKn": "6,24,500,3000",
+        "medicine": "acetaminophen"
+      },
+      "sameNumbers": {
+        "hi": true,
+        "kn": true
+      },
+      "medicineNameKept": {
+        "hi": true,
+        "kn": true
+      },
+      "hiVerifier": "pass"
+    },
+    {
+      "source": "Follow up with your primary care clinic October 20, 2026 at 10:30 AM. Northside Family Clinic, 1200 Cedar Avenue.",
+      "en": "A follow-up visit: Tuesday, October 20, 2026 at 10:30 AM, Northside Family Clinic, 1200 Cedar Avenue.",
+      "hi": "एक फ़ॉलो-अप मुलाक़ात: मंगलवार, 20 अक्टूबर 2026, सुबह 10:30 बजे, Northside Family Clinic, 1200 Cedar Avenue।",
+      "kn": "ಮುಂದಿನ ಭೇಟಿ: ಮಂಗಳವಾರ, ಅಕ್ಟೋಬರ್ 20, 2026 ರಂದು 10:30 AM ಗಂಟೆಗೆ, ನಾರ್ತ್ಸೈಡ್ ಫ್ಯಾಮಿಲಿ ಕ್ಲಿನಿಕ್, 1200 ಸೀಡರ್ ಅವೆನ್ಯೂ.",
+      "knStatus": "verified",
+      "facts": {
+        "numbersEn": "10,20,30,1200,2026",
+        "numbersHi": "10,20,30,1200,2026",
+        "numbersKn": "10,20,30,1200,2026",
+        "medicine": null
+      },
+      "sameNumbers": {
+        "hi": true,
+        "kn": true
+      },
+      "medicineNameKept": {
+        "hi": true,
+        "kn": true
+      },
+      "hiVerifier": "pass"
+    },
+    {
+      "source": "Apixaban 5 mg: Take twice daily. Do not stop taking unless instructed by your provider.",
+      "en": "Keep taking Apixaban 5 mg, twice a day. Do not stop taking it unless your provider tells you to. This is a high-alert medicine, so ClearCare keeps it on your “check with your care team” list and doesn’t set reminders for it.",
+      "hi": "Apixaban 5 mg, दिन में दो बार लेते रहें। जब तक डॉक्टर न कहें, इसे लेना बंद न करें। यह ज़्यादा जोखिम वाली दवा है, इसलिए ClearCare इसे “देखभाल टीम से पूछें” सूची में रखता है और इसके रिमाइंडर नहीं लगाता।",
+      "kn": "Apixaban 5 mg ಅನ್ನು ದಿನಕ್ಕೆ ಎರಡು ಬಾರಿ ತೆಗೆದುಕೊಳ್ಳುತ್ತಿರಿ. ನಿಮ್ಮ ಆರೈಕೆದಾರರು ಹೇಳದ ಹೊರತು ಅದನ್ನು ನಿಲ್ಲಿಸಬೇಡಿ. ಇದು ಹೆಚ್ಚಿನ-ಎಚ್ಚರಿಕೆಯ ಔಷಧಿಯಾಗಿದೆ, ಆದ್ದರಿಂದ ClearCare ಅದನ್ನು ನಿಮ್ಮ “ಆರೈಕೆ ತಂಡದೊಂದಿಗೆ ಪರಿಶೀಲಿಸಿ” ಪಟ್ಟಿಯಲ್ಲಿ ಇರಿಸುತ್ತದೆ ಮತ್ತು ಅದಕ್ಕೆ ಜ್ಞಾಪನೆಗಳನ್ನು ಹೊಂದಿಸುವುದಿಲ್ಲ.",
+      "knStatus": "verified",
+      "facts": {
+        "numbersEn": "5",
+        "numbersHi": "5",
+        "numbersKn": "5",
+        "medicine": "apixaban"
+      },
+      "sameNumbers": {
+        "hi": true,
+        "kn": true
+      },
+      "medicineNameKept": {
+        "hi": true,
+        "kn": true
+      },
+      "hiVerifier": "pass"
+    },
+    {
+      "source": "Call the clinic for any bleeding.",
+      "en": "Important warning sign. If you have bleeding, call the clinic.",
+      "hi": "ज़रूरी चेतावनी। अगर खून बह रहा हो, तो क्लिनिक को फ़ोन करें।",
+      "kn": "ಪ್ರಮುಖ ಎಚ್ಚರಿಕೆ ಚಿಹ್ನೆ. ನಿಮಗೆ ರಕ್ತಸ್ರಾವವಾದರೆ, ಕ್ಲಿನಿಕ್ಗೆ ಕರೆ ಮಾಡಿ.",
+      "knStatus": "verified",
+      "facts": {
+        "numbersEn": "",
+        "numbersHi": "",
+        "numbersKn": "",
+        "medicine": null
+      },
+      "sameNumbers": {
+        "hi": true,
+        "kn": true
+      },
+      "medicineNameKept": {
+        "hi": true,
+        "kn": true
+      },
+      "hiVerifier": "pass"
+    },
+    {
+      "source": "Follow up with your clinician October 19, 2026 at 9:00 AM. Clinic location is not specified.",
+      "en": "A follow-up visit is mentioned (Monday, October 19, 2026, 9:00 AM), but some details are missing. The place isn’t given. Please confirm it with your care team.",
+      "hi": "एक फ़ॉलो-अप मुलाक़ात का ज़िक्र है (सोमवार, 19 अक्टूबर 2026, सुबह 9:00 बजे), लेकिन कुछ जानकारी नहीं है। जगह नहीं दी गई है। कृपया अपनी देखभाल टीम से पक्का करें।",
+      "kn": "ಅನುಸರಣಾ ಭೇಟಿಯನ್ನು ಉಲ್ಲೇಖಿಸಲಾಗಿದೆ (ಸೋಮವಾರ, ಅಕ್ಟೋಬರ್ 19, 2026, 9:00 AM), ಆದರೆ ಕೆಲವು ವಿವರಗಳು ಕಾಣೆಯಾಗಿವೆ. ಸ್ಥಳವನ್ನು ನೀಡಲಾಗಿಲ್ಲ. ದಯವಿಟ್ಟು ಅದನ್ನು ನಿಮ್ಮ ಆರೈಕೆ ತಂಡದೊಂದಿಗೆ ದೃಢಪಡಿಸಿ.",
+      "knStatus": "verified",
+      "facts": {
+        "numbersEn": "0,9,19,2026",
+        "numbersHi": "0,9,19,2026",
+        "numbersKn": "0,9,19,2026",
+        "medicine": null
+      },
+      "sameNumbers": {
+        "hi": true,
+        "kn": true
+      },
+      "medicineNameKept": {
+        "hi": true,
+        "kn": true
+      },
+      "hiVerifier": "pass"
+    },
+    {
+      "source": "Stop aspirin until reviewed by your doctor.",
+      "en": "Do not take aspirin for now — your document says until “reviewed by your doctor”.",
+      "hi": "अभी aspirin न लें — दस्तावेज़ में लिखा है: “reviewed by your doctor” तक।",
+      "kn": "ಇದೀಗ aspirin ತೆಗೆದುಕೊಳ್ಳಬೇಡಿ — ನಿಮ್ಮ ದಾಖಲೆಯಲ್ಲಿ “ನಿಮ್ಮ ವೈದ್ಯರಿಂದ ಪರಿಶೀಲಿಸಿದ ನಂತರ” ಎಂದು ಹೇಳುತ್ತದೆ.",
+      "knStatus": "verified",
+      "facts": {
+        "numbersEn": "",
+        "numbersHi": "",
+        "numbersKn": "",
+        "medicine": "aspirin"
+      },
+      "sameNumbers": {
+        "hi": true,
+        "kn": true
+      },
+      "medicineNameKept": {
+        "hi": true,
+        "kn": true
+      },
+      "hiVerifier": "pass"
+    },
+    {
+      "source": "Start metoprolol after three days.",
+      "en": "metoprolol needs checking before you rely on it. The document doesn’t say how much to take. The document doesn’t say how often to take it. Your document says: “Start metoprolol after three days.”",
+      "hi": "metoprolol पर भरोसा करने से पहले इसे पक्का करना ज़रूरी है। दस्तावेज़ में यह नहीं लिखा कि कितनी लेनी है। दस्तावेज़ में यह नहीं लिखा कि कितनी बार लेनी है। आपके दस्तावेज़ में लिखा है: “Start metoprolol after three days.”",
+      "kn": "metoprolol ಅನ್ನು ಅವಲಂಬಿಸುವ ಮೊದಲು ಪರಿಶೀಲಿಸಬೇಕಾಗಿದೆ. ದಾಖಲೆಯು ಎಷ್ಟು ತೆಗೆದುಕೊಳ್ಳಬೇಕು ಎಂದು ಹೇಳುವುದಿಲ್ಲ. ದಾಖಲೆಯು ಎಷ್ಟು ಬಾರಿ ತೆಗೆದುಕೊಳ್ಳಬೇಕು ಎಂದು ಹೇಳುವುದಿಲ್ಲ. ನಿಮ್ಮ ದಾಖಲೆ ಹೇಳುತ್ತದೆ: “ಮೂರು ದಿನಗಳ ನಂತರ metoprolol ಪ್ರಾರಂಭಿಸಿ.”",
+      "knStatus": "verified",
+      "facts": {
+        "numbersEn": "",
+        "numbersHi": "",
+        "numbersKn": "",
+        "medicine": "metoprolol"
+      },
+      "sameNumbers": {
+        "hi": true,
+        "kn": true
+      },
+      "medicineNameKept": {
+        "hi": true,
+        "kn": true
+      },
+      "hiVerifier": "number_missing"
+    },
+    {
+      "source": "Take prednisone 5 mg for three days, followed by 2.5 mg.",
+      "en": "prednisone: the dose changes over time. First take 5 mg for 3 days. Then take 2.5 mg. This is a high-alert medicine, so ClearCare keeps it on your “check with your care team” list and doesn’t set reminders for it.",
+      "hi": "prednisone: खुराक समय के साथ बदलती है। पहले 3 दिन तक 5 mg लें। उसके बाद 2.5 mg लें। यह ज़्यादा जोखिम वाली दवा है, इसलिए ClearCare इसे “देखभाल टीम से पूछें” सूची में रखता है और इसके रिमाइंडर नहीं लगाता।",
+      "kn": "prednisone: ಡೋಸ್ ಕಾಲಾನುಕ್ರಮದಲ್ಲಿ ಬದಲಾಗುತ್ತದೆ. ಮೊದಲು 3 ದಿನಗಳಿಗೆ 5 mg ತೆಗೆದುಕೊಳ್ಳಿ. ನಂತರ 2.5 mg ತೆಗೆದುಕೊಳ್ಳಿ. ಇದು ಹೆಚ್ಚಿನ-ಎಚ್ಚರಿಕೆಯ ಔಷಧಿಯಾಗಿದೆ, ಆದ್ದರಿಂದ ClearCare ಅದನ್ನು ನಿಮ್ಮ “ನಿಮ್ಮ ಆರೈಕೆ ತಂಡದೊಂದಿಗೆ ಪರಿಶೀಲಿಸಿ” ಪಟ್ಟಿಯಲ್ಲಿ ಇಡುತ್ತದೆ ಮತ್ತು ಅದಕ್ಕೆ ಜ್ಞಾಪನೆಗಳನ್ನು ಹೊಂದಿಸುವುದಿಲ್ಲ.",
+      "knStatus": "verified",
+      "facts": {
+        "numbersEn": "2.5,3,5",
+        "numbersHi": "2.5,3,5",
+        "numbersKn": "2.5,3,5",
+        "medicine": "prednisone"
+      },
+      "sameNumbers": {
+        "hi": true,
+        "kn": true
+      },
+      "medicineNameKept": {
+        "hi": true,
+        "kn": true
+      },
+      "hiVerifier": "pass"
+    },
+    {
+      "source": "Continue oral medication BID PC for five days.",
+      "en": "this medicine needs checking before you rely on it. The document doesn’t name this medicine. The document doesn’t say how much to take. Your document says: “Continue oral medication BID PC for five days.”",
+      "hi": "यह दवा पर भरोसा करने से पहले इसे पक्का करना ज़रूरी है। दस्तावेज़ में इस दवा का नाम नहीं लिखा है। दस्तावेज़ में यह नहीं लिखा कि कितनी लेनी है। आपके दस्तावेज़ में लिखा है: “Continue oral medication BID PC for five days.”",
+      "kn": "ಈ ಔಷಧಿಯನ್ನು ಅವಲಂಬಿಸುವ ಮೊದಲು ಪರಿಶೀಲಿಸಬೇಕಾಗಿದೆ. ದಾಖಲೆಯು ಈ ಔಷಧಿಯ ಹೆಸರನ್ನು ಹೇಳುವುದಿಲ್ಲ. ದಾಖಲೆಯು ಎಷ್ಟು ತೆಗೆದುಕೊಳ್ಳಬೇಕು ಎಂದು ಹೇಳುವುದಿಲ್ಲ. ನಿಮ್ಮ ದಾಖಲೆ ಹೇಳುತ್ತದೆ: “ಐದು ದಿನಗಳವರೆಗೆ ಮೌಖಿಕ ಔಷಧಿ BID PC ಮುಂದುವರಿಸಿ.”",
+      "knStatus": "verified",
+      "facts": {
+        "numbersEn": "",
+        "numbersHi": "",
+        "numbersKn": "",
+        "medicine": null
+      },
+      "sameNumbers": {
+        "hi": true,
+        "kn": true
+      },
+      "medicineNameKept": {
+        "hi": true,
+        "kn": true
+      },
+      "hiVerifier": "number_missing,frequency_changed"
+    },
+    {
+      "source": "Do not take ibuprofen.",
+      "en": "Stop taking ibuprofen.",
+      "hi": "ibuprofen लेना बंद करें।",
+      "kn": "ibuprofen ತೆಗೆದುಕೊಳ್ಳುವುದನ್ನು ನಿಲ್ಲಿಸಿ.",
+      "knStatus": "verified",
+      "facts": {
+        "numbersEn": "",
+        "numbersHi": "",
+        "numbersKn": "",
+        "medicine": "ibuprofen"
+      },
+      "sameNumbers": {
+        "hi": true,
+        "kn": true
+      },
+      "medicineNameKept": {
+        "hi": true,
+        "kn": true
+      },
+      "hiVerifier": "pass"
+    },
+    {
+      "source": "Take amoxicillin 500 mg by mouth three times daily for 7 days.",
+      "en": "Take amoxicillin 500 mg by mouth, three times a day for 7 days.",
+      "hi": "amoxicillin 500 mg, मुँह से, दिन में तीन बार, 7 दिन तक लें।",
+      "kn": "amoxicillin 500 mg ಅನ್ನು ಬಾಯಿಯಿಂದ, ದಿನಕ್ಕೆ ಮೂರು ಬಾರಿ, 7 ದಿನಗಳವರೆಗೆ ತೆಗೆದುಕೊಳ್ಳಿ.",
+      "knStatus": "verified",
+      "facts": {
+        "numbersEn": "7,500",
+        "numbersHi": "7,500",
+        "numbersKn": "7,500",
+        "medicine": "amoxicillin"
+      },
+      "sameNumbers": {
+        "hi": true,
+        "kn": true
+      },
+      "medicineNameKept": {
+        "hi": true,
+        "kn": true
+      },
+      "hiVerifier": "pass"
+    },
+    {
+      "source": "Take acetaminophen 500 mg every 6 hours as needed for pain. Do not exceed 3,000 mg in 24 hours.",
+      "en": "Take acetaminophen 500 mg, every 6 hours, only when you need it for pain. Do not take more than 3000 mg in 24 hours.",
+      "hi": "acetaminophen 500 mg, हर 6 घंटे में लें — सिर्फ़ तब जब दर्द के लिए ज़रूरत हो। 24 घंटे में 3000 mg से ज़्यादा न लें।",
+      "kn": "acetaminophen 500 mg ಅನ್ನು, ಪ್ರತಿ 6 ಗಂಟೆಗಳಿಗೆ, ನೋವಿಗಾಗಿ ಮಾತ್ರ ಅಗತ್ಯವಿದ್ದಾಗ ತೆಗೆದುಕೊಳ್ಳಿ. 24 ಗಂಟೆಗಳಲ್ಲಿ 3000 mg ಕ್ಕಿಂತ ಹೆಚ್ಚು ತೆಗೆದುಕೊಳ್ಳಬೇಡಿ.",
+      "knStatus": "verified",
+      "facts": {
+        "numbersEn": "6,24,500,3000",
+        "numbersHi": "6,24,500,3000",
+        "numbersKn": "6,24,500,3000",
+        "medicine": "acetaminophen"
+      },
+      "sameNumbers": {
+        "hi": true,
+        "kn": true
+      },
+      "medicineNameKept": {
+        "hi": true,
+        "kn": true
+      },
+      "hiVerifier": "pass"
+    }
+  ]
+}

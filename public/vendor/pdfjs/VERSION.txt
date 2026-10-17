@@ -1,0 +1,1 @@
+pdfjs-dist 6.2.108 (Apache-2.0) LEGACY build (broad browser support), unmodified; build/ legacy/build/pdf*.min.mjs and cmaps/. Shared by the browser and the Node server.

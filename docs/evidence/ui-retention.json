@@ -1,0 +1,76 @@
+{
+ "method": "Playwright Chromium 1366x900, original ZIP server vs improved server, per-pixel diff (threshold 16/255)",
+ "note": "Only difference: the added \"Today \u00b7 Hear my day\" sidebar row at y=344-362, below the original items.",
+ "screens": {
+  "overview": {
+   "identical": false,
+   "diffBox": [
+    30,
+    344,
+    179,
+    362
+   ],
+   "changedPixels": 588
+  },
+  "careplan": {
+   "identical": false,
+   "diffBox": [
+    30,
+    344,
+    179,
+    362
+   ],
+   "changedPixels": 537
+  },
+  "review": {
+   "identical": false,
+   "diffBox": [
+    30,
+    344,
+    179,
+    362
+   ],
+   "changedPixels": 537
+  },
+  "documents": {
+   "identical": false,
+   "diffBox": [
+    30,
+    344,
+    179,
+    362
+   ],
+   "changedPixels": 537
+  },
+  "settings": {
+   "identical": false,
+   "diffBox": [
+    30,
+    344,
+    179,
+    362
+   ],
+   "changedPixels": 537
+  },
+  "calendar": {
+   "identical": false,
+   "diffBox": [
+    30,
+    344,
+    179,
+    362
+   ],
+   "changedPixels": 537
+  },
+  "upload": {
+   "identical": false,
+   "diffBox": [
+    30,
+    344,
+    179,
+    362
+   ],
+   "changedPixels": 537
+  }
+ }
+}
