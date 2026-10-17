@@ -1,71 +1,92 @@
-# ClearCare
+# ClearCare: understand my care instructions (v2)
 
-A responsive, accessible, synthetic-data demo that helps patients and caregivers organize discharge instructions.
+A **desktop application** (Windows) that is a **multilingual (English · Español · हिन्दी), voice-first, source-grounded post-discharge companion**. It reads a discharge PDF and turns it into:
+- a calm daily check-in you can listen to;
+- plain-language explanations;
+- answers that come only from your document.
 
-## Requirements
+Anything unclear is kept in a separate "Needs clarification" list and never becomes a reminder.
 
-- Node.js 18 or newer
-- No npm packages, API keys, or external services required for text-based PDF extraction
+> Synthetic-data demo. **Not a medical device** and not clinically validated. Do not upload real patient records. Always follow your care team.
 
-## Run
+## AMD Developer Hackathon: ACT III (October 2026)
 
-```sh
-npm start
-```
+| Topic | Document |
+|---|---|
+| What was found, fixed and verified | [`CLEARCARE_AUDIT.md`](CLEARCARE_AUDIT.md) |
+| Official requirements and status | [`CLEARCARE_AMD_COMPLIANCE.md`](CLEARCARE_AMD_COMPLIANCE.md) |
+| What AMD powers, live evidence, how to reproduce | [`CLEARCARE_AMD_VERIFICATION.md`](CLEARCARE_AMD_VERIFICATION.md) |
+| Safety boundaries, tests, limitations | [`CLEARCARE_MEDICAL_SAFETY.md`](CLEARCARE_MEDICAL_SAFETY.md) |
+| Test results with methods and denominators | [`CLEARCARE_TEST_RESULTS.md`](CLEARCARE_TEST_RESULTS.md) |
+| Differentiation (and its limits) | [`CLEARCARE_DIFFERENTIATION.md`](CLEARCARE_DIFFERENTIATION.md) |
+| Videos, slide deck, submission checklist | [`CLEARCARE_AMD_ACT_III_SUBMISSION/`](CLEARCARE_AMD_ACT_III_SUBMISSION/) |
 
-Open `http://localhost:4173`. To use another local port, set `PORT` before starting (for example, PowerShell: `$env:PORT=5000; npm start`). The server binds to `127.0.0.1` and serves the app locally.
+New in this round: Family calendar with a **Calendar Agent** (the papers fill the calendar, with a log of every decision), a **Care Agent** (plan → tools → one AMD call → verified answer with a visible trace), a **safety gate** in 5 languages, **38 more languages** via AMD translation with locked doses and back-translation checks, onboarding, completion tracking, and AMD request pacing with request-id telemetry.
 
-## Use the demo
+Reproduce the evidence: `npm test` · `node tools/eval-extraction.mjs` · `node tools/eval-calendar.mjs` · `node --env-file=.env tools/amd-verify.mjs` (live AMD, about 7 min) · browser suites `e2e/run-e2e.mjs` and `e2e/run-journey.mjs` (need `playwright-core`; set `CLEARCARE_E2E_CHANNEL=msedge` to use installed Edge). Videos: `CLEARCARE_DEMO_AUTOMATION/build-video.mjs A|B`.
 
-Select **Add discharge papers** and upload a text-based PDF from `discharge_pdf/`, or choose a synthetic scenario from the picker. The PDF is read in the browser, its embedded text is extracted, and deterministic rules build a schema-validated care plan with source evidence. Uploaded bytes are not sent to the server or written to disk. The supported PDF parser is intentionally small and tested against the included synthetic PDFs. It is not a general-purpose PDF/OCR engine.
+## Quick start (Windows)
 
-Image files and scanned PDFs without embedded text are not OCRed. They produce an incomplete result rather than guessed instructions. Password-protected, malformed, or unsupported compressed PDFs may also be rejected. The extractor recognizes a limited set of medication names and common follow-up date/time patterns; always compare results to the source. The server only serves the app files; document parsing does not depend on a separate API request.
+1. Install **Node.js 22 LTS** from https://nodejs.org (Node 18+ works with reduced server-side PDF reading).
+2. Unzip, then double-click **`TEST_CLEARCARE.bat`**. It runs the syntax check, 92 automated tests and a smoke test against the real server. The 23 browser tests are optional. Results go to `test-results.txt`.
+3. Double-click **`CREATE_DESKTOP_SHORTCUT.bat`** once. After that, open **ClearCare** from your Desktop or Start menu. It opens in **its own desktop window** (Microsoft Edge app mode: no tabs or address bar), and closing the window stops ClearCare. `START_CLEARCARE.bat` does the same without a shortcut.
+4. Optional AMD AI: copy `.env.example` to `.env` and set `RADEON_API_KEY=`.
 
-## Manual PDF test files
+On macOS or Linux: `npm test`, `npm run smoke`, `npm start`. There are no `npm install` steps and no runtime dependencies.
 
-Six fictional, clearly labeled PDFs are in `discharge_pdf/`:
+## What's new in v2 (the original app is preserved)
 
-- `01_everyday_recovery.pdf` — ordinary recovery instructions and a complete follow-up.
-- `02_ambiguous_dose.pdf` — metoprolol dose with no unit.
-- `03_conflicting_warfarin.pdf` — two conflicting warfarin doses and an incomplete follow-up.
-- `04_missing_units_insulin.pdf` — missing units for two medicines, including high-risk insulin.
-- `05_high_risk_apixaban.pdf` — high-risk anticoagulant review and a missing appointment location.
-- `06_unreadable_scan.pdf` — intentionally illegible values and an incomplete appointment.
+| Area | What it does |
+|---|---|
+| **Today: voice-guided daily check-in** | A greeting matched to the time of day, then today's medicines, appointments and recovery tasks. It also covers do-not-take items, a separate needs-clarification list, warning signs and what's coming up. Controls: **Hear my day**, pause, stop, per-sentence replay and speed. Autoplay only with consent, and an honest message if the browser blocks it. |
+| **Document reading** | pdf.js text layer with page and line provenance. Handles multi-page, two-column, tables, rotated text, Hindi text and password or malformed detection. Optional local OCR (tesseract). The original parser is kept as a fallback. |
+| **Clinical instruction engine** | Status START/CONTINUE/STOP/HOLD/CHANGE/UNKNOWN; dose, unit, quantity (½, ranges), route, frequency (BID/TDS/1-0-1/q6h…), timing, duration, tapers, daily limits, cautions, conditions; appointments, tests, warnings, recovery tasks. Prompt-injection and markup lines are quarantined. |
+| **Safety gates** | An instruction becomes a reminder only if it is clear, active, complete and not high-alert. Every AI text **and** every rule-based text is independently verified for numbers, units, names, negation, frequency, timing, as-needed, route, emergency severity and language. If verification fails, the original words are shown instead. |
+| **Three languages** | English, Spanish and Hindi only. Explanations are built from the structured meaning, not translated word by word. Code-mixed questions ("Follow-up appointment kab hai?") are understood. |
+| **AMD AI (genuine)** | The original AMD Token Factory endpoint and model (`DeepSeek-V4-Flash`). Three explanation modes and grounded Q&A, with timeout, one bounded retry, schema validation, verification and telemetry. One instruction, or at most 3 excerpts, is sent; never the whole document. |
+| **Voice** | Web Speech text-to-speech with dose-safe pronunciation ("0.5 mg" → "zero point 5 milligrams") that is verified before speaking. Voice questions start only on a tap, after consent. |
+| **Privacy** | Default processing stays in the browser. Plan storage is opt-in. Export and delete are available. Strict CSP and security headers. |
 
-Every file is marked synthetic and not for clinical use. The included text-based PDFs can now be uploaded and parsed locally. `06_unreadable_scan.pdf` contains illegible sample values, and tests verify these remain incomplete instead of being filled in.
+## Original UI retained
 
-## Understand My Care Instructions (AMD Token Factory)
+The original ClearCare interface is kept as it was.
+- Every original screen (Overview, care plan, review, documents, settings, calendar and upload) is **pixel-identical** to the original ZIP at 1366×900. The only exception is one added sidebar row, **Today · Hear my day**, placed below the original items so nothing moves. Evidence: `docs/evidence/ui-retention.json` and `ui-retention-overview-original-vs-new.png`.
+- The new Today view reuses the original's own visual language: fonts, panels, rows, status tags, buttons and evidence blocks. Its text colours are a shade darker to meet WCAG contrast; the original screens keep their colours.
 
-Each medication and care instruction in **My care plan** has an **Explain simply** button. No request is made at page load. Clicking one button sends only that instruction and the selected language to the local backend; it never sends the PDF, full plan, patient identity, or conversation history.
+## Desktop only
 
-The backend calls `https://developer.amd.com.cn/radeon/api/v1/chat/completions` with model `DeepSeek-V4-Flash`. The AMD API key is read only from the backend environment variable `RADEON_API_KEY`. Do not put the key in frontend files or commit it. For PowerShell, set it in the current terminal before `npm start`:
+ClearCare is designed and tested as a **desktop application** only.
+- The phone and tablet layouts were removed. The original stylesheet's phone breakpoints are stripped when served; the file itself is unchanged.
+- A narrow window keeps the desktop layout and scrolls.
+- The window opens at 1366×900.
+- Your preferences are stored in ClearCare's own window profile (`%LOCALAPPDATA%\ClearCare`).
 
-```powershell
-$env:RADEON_API_KEY = "your-token-factory-key"
-npm start
-```
+## Languages
 
-The selected instruction is included as the only user message. A fixed system prompt asks for at most two short sentences, exact meaning preservation, no new medical advice, no dose/schedule/treatment changes, and explicit clarification when ambiguous. A local deterministic ambiguity check returns a clarification message without contacting AMD for known incomplete/conflicting text. Successful results are cached in backend memory by SHA-256 of instruction plus language; concurrent duplicate requests share one provider call. Cache is limited to 200 items and clears when the server restarts. Errors are not cached and are never retried automatically. The browser offers retry only after a user click.
+Only **English, Español and हिन्दी** are supported, as requested. Medicine names stay as written on the box, and numbers stay as digits.
 
-The explanation is labeled separately from the original instruction and includes a care-team reminder. It is not clinician approval or a replacement for the original instruction. API responses are mocked in automated tests; implementation and tests make no live AMD requests. To demonstrate one real inference, configure `RADEON_API_KEY`, run `npm start`, open a synthetic care plan, and click **Explain simply** beside one instruction.
+## Tests (all executed; see `REGRESSION_RESULTS.md`)
 
-## Safety behavior
+| Suite | Result |
+|---|---|
+| Original 23 tests (unchanged files) | 23 / 23 |
+| Independent red-team rounds (2) | criticals fixed, regression-tested (`docs/ADVERSARIAL_EVALUATION_REPORT.md`) |
+| Full `npm test` | 92 / 92 on Node 22. On Node 20: 86 pass, 6 skipped (server-side pdf.js needs Node 22.13 or newer), 0 fail. |
+| `npm run smoke` (real server, real HTTP) | 9 / 9 |
+| `npm run test:e2e` (Playwright, Chromium) | 23 / 23 |
+| axe-core WCAG 2.1 AA on Today | 0 violations |
 
-- High-risk drugs and ambiguous doses are visibly sent to review. There is no control to approve medication instructions in the demo.
-- Conflicting and missing-unit instructions remain unresolved and retain their original source text.
-- Calendar export includes only appointments marked confirmed with a date, time, and complete location. Review-needed or incomplete visits cannot be exported.
-- The extracted source text is kept separate from the plain-language summary and escaped before rendering.
-- Language settings change the plan labels in the demo; source evidence remains in its original language.
-- Use synthetic data only. Avoid uploading real medical records.
+## Documentation
 
-This is a hackathon demo, not a medical device, clinical decision support system, or replacement for a clinician. AI extraction, OCR, AI translation, direct calendar integration, authentication, and durable storage are not implemented. Local deterministic extraction is limited and must be checked against the PDF source.
+- **Original baseline and change control:** `BASELINE_MANIFEST.md` · `ARCHITECTURE.md` · `CHANGE_IMPACT_REPORT.md` · `OCP_COMPLIANCE_REPORT.md` · `REGRESSION_RESULTS.md`
+- **AMD and security:** `AMD_INTEGRATION_REPORT.md` · `SECURITY_AUDIT.md` · `COMPETITIVE_DIFFERENTIATION.md`
+- **`docs/`:** document extraction · clinical safety · multilingual fidelity · speech · calendar briefing · accessibility · E2E · performance · patient-comprehension plan · adversarial evaluation · known limitations and acceptance gates · deployment
+- **Evidence (logs, screenshots, JSON):** `docs/evidence/`
 
-## Checks
+## Original sample PDFs
 
-```sh
-npm test
-node --check server.js
-node --check public/app.js
-```
+`discharge_pdf/01–06` are the original fictional fixtures and are unchanged. `discharge_pdf_adversarial/07–19` are new synthetic stress fixtures (password: `patient123` for #11).
 
-The tests cover PDF text extraction from the included synthetic files, structured field extraction, source evidence, ambiguous/conflicting/missing-unit detection, high-risk escalation, unreadable content handling, schema checks, and calendar eligibility. These are fixture-based checks on the included files, including the browser-side upload reader; they do not measure general PDF accuracy, OCR, or clinical safety.
+## Original behaviour that is preserved
+
+The Overview dashboard, review modal ("Mark follow-up done"), care plan modal with **Explain simply**, documents view, synthetic scenarios, and `.ics` export of confirmed appointments only all work as before. The original `/api/explain` response is now also verified before display.
