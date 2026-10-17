@@ -13,7 +13,7 @@ A responsive, accessible, synthetic-data demo that helps patients and caregivers
 npm start
 ```
 
-Open `http://localhost:4173`. To use another local port, set `PORT` before starting (for example, PowerShell: `$env:PORT=5000; npm start`). The server binds to `127.0.0.1` and serves the app locally.
+Open `http://localhost:4174`. To use another local port, set `PORT` before starting (for example, PowerShell: `$env:PORT=5000; npm start`). The server binds to `127.0.0.1` and serves the app locally.
 
 ## Use the demo
 

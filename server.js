@@ -55,14 +55,14 @@ async function handleRequest(req, res) {
   catch { res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' }); res.end('Not found'); }
 }
 export { handleRequest };
-const preferredPort = Number(process.env.PORT || 4173);
+const preferredPort = Number(process.env.PORT || 4174);
 console.log(`[ClearCare] AMD Token Factory explanations: ${process.env.RADEON_API_KEY ? 'RADEON_API_KEY is configured (value hidden).' : 'RADEON_API_KEY is NOT configured; real AMD requests will not be sent.'}`);
 function configure(server) {
   server.requestTimeout = 20_000;
   server.headersTimeout = 25_000;
   server.keepAliveTimeout = 5_000;
   server.on('error', err => {
-  if (err.code === 'EADDRINUSE') console.error(`Port ${preferredPort} is already in use. Close the other server on that port, or start ClearCare on another port with PORT=4174 npm start.`);
+  if (err.code === 'EADDRINUSE') console.error(`Port ${preferredPort} is already in use. Close the other server on that port, or start ClearCare on another port with PORT=4173 npm start.`);
   else console.error(`ClearCare could not start: ${err.message}`);
   process.exitCode = 1;
   });

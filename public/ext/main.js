@@ -23,7 +23,7 @@ const pick = (o, lang) => o[normalizeLang(lang)] ?? o.en;
 
 const state = {
   prefs: { lang: normalizeLang((() => { try { return localStorage.getItem('clearcare-language') || 'English'; } catch { return 'English'; } })()), mode: 'simple', rate: 0.95, autoRead: false, rememberPlan: false, inAppReminders: false, preferLocalVoices: true, importantOnly: false, ...store.get(KEYS.prefs, {}) },
-  plan: null, docMeta: null, tab: 'today', reminders: store.get(KEYS.reminders, {}), done: new Set(store.get(KEYS.done, [])), understood: new Set(store.get(KEYS.understood, [])), questions: store.get(KEYS.questions, []), day1: store.get(KEYS.day1, {}),
+  plan: null, docMeta: null, tab: 'today', questionDraft: '', questionStatus: '', reminders: store.get(KEYS.reminders, {}), done: new Set(store.get(KEYS.done, [])), understood: new Set(store.get(KEYS.understood, [])), questions: store.get(KEYS.questions, []), day1: store.get(KEYS.day1, {}),
   itemMode: new Map(), ai: new Map(), answer: null, lastItemIds: [], status: null, speakingId: null, firedReminders: new Set(),
   visits: store.get(KEYS.visits, []), calMonth: null, calSel: null, calEdit: null, calForm: false
 };
@@ -129,7 +129,7 @@ function txHtml(text, { tag = 'span', cls = '' } = {}) {
 state.agent = null;
 async function askAgent(question) {
   const lang = state.prefs.lang, started = Date.now();
-  state.agent = { question, working: true }; render();
+  state.questionDraft = question; state.questionStatus = ''; state.agent = { question, working: true }; render();
   const tick = setInterval(() => { const el = $('#cc-agent-wait'); if (el) el.textContent = ` ${Math.round((Date.now() - started) / 1000)} s`; }, 1000);
   try {
     const items = state.plan?.items || []; // the local server needs the full items to rebuild schedules
@@ -389,7 +389,6 @@ function render() {
       <div class="cc-seg" role="radiogroup" aria-label="Language / Idioma / भाषा">${Object.values(LANGS).map(l => `<button type="button" role="radio" aria-checked="${l.code === lang && !xl()}" data-lang="${l.code}" lang="${l.bcp47}">${esc(l.label)}</button>`).join('')}</div>
       <select class="cc-xlang" data-xlang aria-label="More languages (AI translation)"><option value="">🌐 ${esc(pick(L('More languages…', 'Más idiomas…', 'और भाषाएँ…'), lang))}</option>${Object.values(EXTRA_LANGS).map(x => `<option value="${x.code}" ${xl() === x.code ? 'selected' : ''}>${esc(`${x.native} · ${x.name}`)}</option>`).join('')}</select>
       <div class="cc-seg" role="radiogroup" aria-label="${esc(pick(L('Explanation style', 'Estilo de explicación', 'समझाने का तरीका'), lang))}">${['simple', 'detailed', 'steps'].map(m => `<button type="button" role="radio" aria-checked="${state.prefs.mode === m}" data-mode="${m}">${esc(t(m, lang))}</button>`).join('')}</div>
-      <label class="cc-toggle"><input type="checkbox" data-pref="importantOnly" ${state.prefs.importantOnly ? 'checked' : ''}> ${esc(pick(L('Only the important things', 'Solo lo importante', 'सिर्फ़ ज़रूरी बातें'), lang))}</label>
       <span class="cc-amd ${amd?.configured ? 'is-on' : ''}" title="${esc(amd ? `${amd.provider} · ${amd.model}` : '')}">AMD AI: ${esc(amd ? (amd.configured ? (amd.mock ? 'test mock' : pick(L('ready', 'listo', 'तैयार'), lang)) : pick(L('not set up on this computer', 'no configurada en este equipo', 'इस कंप्यूटर पर सेट नहीं'), lang)) : '…')}</span>
     </div>
   </header>
@@ -400,23 +399,24 @@ function render() {
         <button type="button" class="cc-hear" data-act="hear">▶ ${esc(t('hearMyDay', lang))}</button>
         <button type="button" data-act="pause">${esc(player.state === 'paused' ? t('resume', lang) : t('pause', lang))}</button>
         <button type="button" data-act="stop">■ ${esc(t('stop', lang))}</button>
-        <label class="cc-rate">${esc(t('speed', lang))} <input type="range" min="0.6" max="1.2" step="0.05" value="${state.prefs.rate}" data-pref="rate" aria-valuetext="${state.prefs.rate}"></label>
       </div></div>
     <p class="cc-voice-status" id="cc-voice-status" role="status">${esc(state.voiceMsg || '')}</p>${xl() ? `<p class="cc-x-note">🌐 ${esc(`${EXTRA_LANGS[xl()].native}: AI translation by AMD. Medicine names, doses and numbers are locked and checked; a line that fails the check stays in English (EN).`)}<span id="cc-x-status">${esc(state.xmsg)}</span></p>` : ''}
     <ol class="cc-transcript" aria-label="${esc(pick(L('Transcript', 'Transcripción', 'लिखित रूप'), lang))}">${briefing.map((s, i) => `<li data-seg="${i}" class="${state.speakingSeg === i ? 'is-speaking' : ''}">${txHtml(s.text)} <button type="button" class="cc-mini" data-replay="${i}" aria-label="${esc(t('replay', lang))}: ${i + 1}">↻</button></li>`).join('')}</ol>
   </section>
-  <section class="cc-ask panel" aria-labelledby="cc-ask-h">
-    <h2 id="cc-ask-h">${esc(t('ask', lang))}</h2>
-    <form class="cc-ask-form" data-form="ask"><label class="cc-sr" for="cc-q">${esc(t('ask', lang))}</label><input id="cc-q" name="q" maxlength="500" autocomplete="off" placeholder="${esc(t('askPlaceholder', lang))}" lang="${LANGS[lang].bcp47}">
-      <button type="button" data-act="mic" class="cc-mic ${recognizer.listening ? 'is-on' : ''}" aria-pressed="${recognizer.listening}" ${recognizer.available ? '' : 'disabled'} title="${esc(recognizer.available ? t('speakQuestion', lang) : pick(L('Voice questions need Chrome or Edge', 'Las preguntas por voz requieren Chrome o Edge', 'बोलकर पूछने के लिए Chrome या Edge चाहिए'), lang))}">🎤 <span class="cc-sr">${esc(t('speakQuestion', lang))}</span></button>
-      <button type="submit">${esc(t('send', lang))}</button><button type="button" data-act="agent" class="cc-agent-btn" title="${esc(pick(L('The Care Agent plans its steps, checks your papers and calendar with its tools, and shows how it reached the answer.', 'El Agente planifica, revisa sus papeles y calendario y muestra cómo llegó a la respuesta.', 'केयर एजेंट योजना बनाता है, आपके कागज़ और कैलेंडर जाँचता है, और दिखाता है कि जवाब तक कैसे पहुँचा।'), lang))}">🤖 ${esc(pick(L('Ask the Care Agent', 'Preguntar al Agente', 'केयर एजेंट से पूछें'), lang))}</button></form>
-    ${recognizer.listening ? `<p class="cc-listening" role="status">● ${esc(t('listening', lang))}</p>` : ''}
-    <div class="cc-answer" aria-live="polite">${answerHtml()}</div>${agentHtml()}
-  </section>
-  <nav class="cc-tabs" role="tablist" aria-label="${esc(pick(L('Care plan views', 'Vistas del plan', 'देखभाल योजना'), lang))}">${TABS.map(k => `<button type="button" role="tab" aria-selected="${state.tab === k}" data-tab="${k}">${esc(TAB_LABEL[k] ? t(TAB_LABEL[k], lang) : pick(TAB_OWN_LABEL[k], lang))}${k === 'clarify' && state.plan ? ` <span class="cc-count">${state.plan.items.filter(i => i.clarity !== 'clear' || i.highRisk).length}</span>` : ''}</button>`).join('')}</nav>
-  <section class="cc-tabpanel" role="tabpanel">${tabContent(state.tab)}</section>
-  ${settingsHtml()}`;
+  `;
+  const askHost = $('#home-agent-slot'); if (askHost) askHost.innerHTML = askPanelHtml();
   void day;
+}
+function askPanelHtml() {
+  const lang = state.prefs.lang;
+  return `<section class="cc-ask panel" aria-labelledby="cc-ask-h">
+    <h2 id="cc-ask-h">${esc(pick(L('Ask about your document', 'Pregunta sobre su documento', 'अपने दस्तावेज़ के बारे में पूछें'), lang))}</h2>
+    <form class="cc-ask-form" data-form="ask"><label class="cc-sr" for="cc-q">${esc(t('ask', lang))}</label><input id="cc-q" name="q" maxlength="500" autocomplete="off" value="${esc(state.questionDraft)}" placeholder="${esc(t('askPlaceholder', lang))}" lang="${LANGS[lang].bcp47}">
+      <button type="button" data-act="mic" class="cc-mic ${recognizer.listening ? 'is-on' : ''}" aria-pressed="${recognizer.listening}" ${recognizer.available ? '' : 'disabled'} title="${esc(recognizer.available ? t('speakQuestion', lang) : pick(L('Voice questions need Chrome or Edge', 'Las preguntas por voz requieren Chrome o Edge', 'बोलकर पूछने के लिए Chrome या Edge चाहिए'), lang))}">🎤 <span class="cc-sr">${esc(t('speakQuestion', lang))}</span></button>
+      <button type="button" data-act="agent" class="cc-agent-btn" title="${esc(pick(L('The Care Agent checks your papers, then sends only relevant evidence to AMD for a grounded answer.', 'El Agente revisa sus documentos y envía a AMD solo la evidencia necesaria para responder.', 'केयर एजेंट आपके कागज़ जाँचता है और जवाब के लिए AMD को सिर्फ़ ज़रूरी जानकारी भेजता है।'), lang))}">🤖 ${esc(pick(L('Ask the Care Agent', 'Preguntar al Agente', 'केयर एजेंट से पूछें'), lang))}</button></form>
+    ${recognizer.listening ? `<p class="cc-listening" role="status">● ${esc(t('listening', lang))} — ${esc(state.questionDraft || pick(L('Start speaking; your words will appear above.', 'Empiece a hablar; sus palabras aparecerán arriba.', 'बोलना शुरू करें; आपके शब्द ऊपर दिखेंगे।'), lang))}</p>` : state.questionStatus ? `<p class="cc-question-status" role="status">${esc(state.questionStatus)}</p>` : ''}
+    <div class="cc-answer" aria-live="polite">${answerHtml()}</div>${agentHtml()}
+  </section>`;
 }
 function answerHtml() {
   const a = state.answer, lang = state.prefs.lang;
@@ -500,7 +500,7 @@ function download(name, text, type) { const url = URL.createObjectURL(new Blob([
 function toast(msg, ms = 5000) { const r = $('#toast-region'); if (!r) return; const el = document.createElement('div'); el.className = 'toast'; el.textContent = msg; el.addEventListener('click', () => el.remove()); r.append(el); setTimeout(() => el.remove(), ms); }
 
 function onClick(e) {
-  const b = e.target.closest('button'); if (!b || !$('#cc-today')?.contains(b)) return;
+  const b = e.target.closest('button'); if (!b || (!$('#cc-today')?.contains(b) && !$('#home-agent-slot')?.contains(b))) return;
   const lang = state.prefs.lang;
   if (b.dataset.lang) { state.voiceMsg = ''; state.prefs.xlang = null; state.prefs.lang = b.dataset.lang; savePrefs(); player.stop(true); if (state.answer?.offerLang) state.answer = null; return render(); }
   if (b.dataset.mode) { state.prefs.mode = b.dataset.mode; state.itemMode.clear(); savePrefs(); return render(); }
@@ -571,7 +571,9 @@ function toggleMic() {
   if (!consent && !confirm(pick(L('Your browser will listen through the microphone only until you stop speaking. In Chrome and Edge, speech recognition may send the audio to the browser maker to turn it into text. ClearCare does not store audio. Continue?', 'El navegador escuchará por el micrófono solo hasta que deje de hablar. En Chrome y Edge, el reconocimiento de voz puede enviar el audio al fabricante del navegador. ClearCare no guarda audio. ¿Continuar?', 'ब्राउज़र सिर्फ़ तब तक माइक से सुनेगा जब तक आप बोलना बंद न करें। Chrome और Edge में आवाज़ पहचान के लिए ऑडियो ब्राउज़र कंपनी को भेजा जा सकता है। ClearCare ऑडियो सेव नहीं करता। जारी रखें?'), lang))) return;
   try { sessionStorage.setItem('clearcare-mic-ok', '1'); } catch { /* ignore */ }
   player.stop(true);
-  recognizer.start({ lang, onText: (txt) => { const q = $('#cc-q'); if (q) q.value = txt; }, onEnd: (finalText) => { render(); if (finalText) { const q = $('#cc-q'); if (q) q.value = finalText; ask(finalText); } }, onError: (err) => { voiceStatus(err === 'not-allowed' ? pick(L('Microphone permission was not given.', 'No se dio permiso al micrófono.', 'माइक की अनुमति नहीं मिली।'), lang) : err === 'unsupported' ? pick(L('Voice questions need Chrome or Edge.', 'Las preguntas por voz requieren Chrome o Edge.', 'बोलकर पूछने के लिए Chrome या Edge चाहिए।'), lang) : `${pick(L('Speech recognition error', 'Error de reconocimiento de voz', 'आवाज़ पहचान में त्रुटि'), lang)}: ${err}`); } });
+  state.questionDraft = '';
+  state.questionStatus = '';
+  recognizer.start({ lang, onText: (txt) => { state.questionDraft = txt; const q = $('#cc-q'); if (q) q.value = txt; }, onEnd: (finalText) => { if (finalText) state.questionDraft = finalText; state.questionStatus = finalText ? pick(L('Review or edit your words above, then choose Ask the Care Agent.', 'Revise o edite lo que dijo arriba y luego elija Preguntar al Agente.', 'ऊपर अपने बोले हुए शब्द देखें या बदलें, फिर केयर एजेंट से पूछें।'), lang) : ''; render(); if (finalText) $('#cc-q')?.focus(); }, onError: (err) => { state.questionStatus = err === 'not-allowed' ? pick(L('Microphone permission was not given.', 'No se dio permiso al micrófono.', 'माइक की अनुमति नहीं मिली।'), lang) : err === 'unsupported' ? pick(L('Voice questions need Chrome or Edge.', 'Las preguntas por voz requieren Chrome o Edge.', 'बोलकर पूछने के लिए Chrome या Edge चाहिए।'), lang) : `${pick(L('Speech recognition error', 'Error de reconocimiento de voz', 'आवाज़ पहचान में त्रुटि'), lang)}: ${err}`; render(); } });
   render();
 }
 let lastFile = null;
@@ -630,38 +632,39 @@ function mount() {
   a.innerHTML = `<span class="nav-icon">☀</span>${esc(t('today', state.prefs.lang))} · ${esc(t('hearMyDay', state.prefs.lang))}`;
   nav.appendChild(a); // after the original items, so their positions are unchanged
   const view = document.createElement('section'); view.id = 'cc-today'; view.className = 'cc-view'; view.hidden = true; view.setAttribute('aria-label', 'Today');
-  $('.content')?.prepend(view);
-  a.addEventListener('click', e => { e.preventDefault(); if (state.tab === 'calendar') state.tab = 'today'; openToday(true); });
-  $$('.main-nav [data-page], [data-page]').forEach(el => el.addEventListener('click', closeToday));
+  $('.main-area')?.append(view);
+  document.addEventListener('click', e => { if (e.target.closest('.main-nav [data-page], [data-page]')) closeToday(false); }, true);
   document.addEventListener('click', onClick);
   document.addEventListener('change', onChange);
-  document.addEventListener('submit', e => { if (e.target.dataset.form === 'ask') { e.preventDefault(); const q = e.target.q.value.trim(); if (q) ask(q); } if (e.target.dataset.form === 'visit') { e.preventDefault(); saveVisitForm(e.target); } });
-  const c = document.createElement('a'); c.href = '#today'; c.id = 'cc-nav-calendar'; c.className = 'nav-item'; c.dataset.ccPage = 'calendar';
-  c.innerHTML = `<span class="nav-icon">📅</span>${esc(pick(L('Family calendar', 'Calendario familiar', 'परिवार का कैलेंडर'), state.prefs.lang))}`;
-  nav.appendChild(c);
-  c.addEventListener('click', e => { e.preventDefault(); state.tab = 'calendar'; openToday(true); });
+  const calendarLink = nav.querySelector('[data-page="calendar"]');
+  nav.insertBefore(a, calendarLink || nav.querySelector('.settings-nav') || null);
+  a.addEventListener('click', e => { e.preventDefault(); state.tab = 'today'; openToday(true); });
+  document.addEventListener('input', e => { if (e.target.id === 'cc-q') state.questionDraft = e.target.value; });
+  document.addEventListener('submit', e => { if (e.target.dataset.form === 'ask') { e.preventDefault(); const q = e.target.q.value.trim(); state.questionDraft = e.target.q.value; if (q) askAgent(q); } if (e.target.dataset.form === 'visit') { e.preventDefault(); saveVisitForm(e.target); } });
   if (location.hash === '#today') openToday(false);
 }
 function openToday(userGesture) {
   const view = $('#cc-today'); if (!view) return;
-  $$('.content > :not(#cc-today)').forEach(el => { el.dataset.ccHidden = el.hidden ? 'keep' : '1'; el.hidden = true; });
-  view.hidden = false; $$('.nav-item').forEach(n => n.classList.toggle('active', n.id === (state.tab === 'calendar' ? 'cc-nav-calendar' : 'cc-nav-today')));
-  const crumb = $('.breadcrumbs strong'); if (crumb) { crumb.dataset.ccOrig ??= crumb.textContent; crumb.textContent = t('today', state.prefs.lang); }
+  window.ClearCareBridge?.openHome?.();
+  $$('.main-area > .content').forEach(el => { el.dataset.ccHidden = el.hidden ? 'keep' : '1'; el.hidden = true; });
+  view.hidden = false; $$('.nav-item').forEach(n => n.classList.toggle('active', n.id === 'cc-nav-today'));
+  const crumb = $('.breadcrumbs strong'); if (crumb) { crumb.dataset.ccOrig ??= crumb.textContent; crumb.textContent = pick(L('Today · Hear my day', 'Hoy · Escucha mi día', 'आज · मेरा दिन सुनें'), state.prefs.lang); }
   history.replaceState(null, '', '#today');
   render(); view.querySelector('h1')?.focus?.();
   window.scrollTo({ top: 0 });
   // Auto-read only with explicit consent AND a real user gesture; otherwise show the button.
   if (state.prefs.autoRead) { if (userGesture) speak(briefing, { auto: true }); else voiceStatus(t('autoplayBlocked', state.prefs.lang)); }
 }
-function closeToday() {
+function closeToday(restoreContent = true) {
   const view = $('#cc-today'); if (!view || view.hidden) return;
   player.stop(true); recognizer.stop(); view.hidden = true;
   const crumb = $('.breadcrumbs strong'); if (crumb?.dataset.ccOrig) crumb.textContent = crumb.dataset.ccOrig;
-  $$('.content > [data-cc-hidden]').forEach(el => { if (el.dataset.ccHidden === '1') el.hidden = false; delete el.dataset.ccHidden; });
-  $('#cc-nav-today')?.classList.remove('active'); $('#cc-nav-calendar')?.classList.remove('active');
+  $$('.main-area > .content[data-cc-hidden]').forEach(el => { if (restoreContent && el.dataset.ccHidden === '1') el.hidden = false; delete el.dataset.ccHidden; });
+  $('#cc-nav-today')?.classList.remove('active');
 }
 
 document.addEventListener('clearcare:document', e => { lastFile = e.detail.file || null; planFromBridge(e.detail); });
+document.addEventListener('clearcare:preferences', e => { Object.assign(state.prefs, e.detail || {}); savePrefs(); player.stop(true); if (state.prefs.rememberPlan && state.plan) store.set(KEYS.plan, state.plan); if (!state.prefs.rememberPlan) store.del(KEYS.plan); render(); });
 document.addEventListener('clearcare:document-error', async e => {
   lastFile = e.detail.file || null;
   const lang = state.prefs.lang;

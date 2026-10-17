@@ -29,7 +29,7 @@ if ($CreateShortcut) {
   [System.Windows.MessageBox]::Show('ClearCare shortcut created on your Desktop and in the Start menu.', 'ClearCare') | Out-Null
   exit 0
 }
-if (-not $env:PORT) { $env:PORT = '4173' }
+if (-not $env:PORT) { $env:PORT = '4174' }
 $base = "http://127.0.0.1:$($env:PORT)"
 
 $node = Get-Command node -ErrorAction SilentlyContinue
