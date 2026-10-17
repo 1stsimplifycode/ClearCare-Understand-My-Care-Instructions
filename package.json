@@ -1,8 +1,16 @@
 {
   "name": "clearcare-discharge-assistant",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "scripts": { "start": "node server.js", "test": "node --test" },
-  "engines": { "node": ">=18" }
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.js",
+    "test": "node --test",
+    "test:e2e": "node e2e/run-e2e.mjs",
+    "smoke": "node tools/smoke.mjs",
+    "perf": "node tools/perf.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
 }
