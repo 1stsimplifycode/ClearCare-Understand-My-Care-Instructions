@@ -1,0 +1,11 @@
+PASS  server starts and serves the app
+PASS  original health endpoint
+PASS  extension status endpoint (AMD config, OCR, pdf.js)  (AMD key configured: false; model DeepSeek-V4-Flash; server pdf.js: true; OCR: eng)
+PASS  vendored pdf.js served as JavaScript module
+PASS  sample PDF parses into a plan with page provenance  (7 items, method pdfjs-text-layer)
+PASS  medication-change PDF: stop/hold never schedulable
+PASS  password-protected PDF rejected
+PASS  AMD explain endpoint responds safely (live call only if RADEON_API_KEY is set)  (no key: correctly reports not configured)
+PASS  security headers present
+
+SMOKE: all checks passed

@@ -1,0 +1,31 @@
+✔ AMD request sends only selected instruction and fixed minimal safety prompt (74.584153ms)
+✔ successful explanation is cached by stable instruction and language hash (1.451596ms)
+✔ duplicate simultaneous requests share one provider call (8.302598ms)
+✔ ambiguous source is escalated without a model call (0.784319ms)
+✔ rate limit, provider failure, missing key, and timeout surface controlled errors (8.374794ms)
+✔ extra data fields and oversized instructions are rejected before provider call (0.816698ms)
+✔ everyday recovery PDF extracts medication, care steps, follow-up, and evidence (20.254162ms)
+✔ ambiguous dose is flagged and the original direction is retained (4.279968ms)
+✔ conflicting high-risk doses remain unresolved and follow-up is not schedulable (2.508248ms)
+✔ missing units and insulin trigger review (2.55964ms)
+✔ high-risk medication is sent to review and missing appointment location blocks scheduling (2.463657ms)
+✔ unreadable demo PDF never invents medicine or appointment details (1.925064ms)
+✔ parser rejects malformed PDF data clearly (0.791863ms)
+✔ all provided examples are valid single-page PDFs (14.022017ms)
+✔ browser-side upload path reads and extracts the everyday PDF without an API request (59.082136ms)
+✔ synthetic scenarios cover normal, ambiguous, conflict, missing unit, unreadable, and high-risk documents (1.2436ms)
+✔ safety rules identify high-risk medications and review medication ambiguity (0.313259ms)
+✔ calendar export requires confirmed appointment and complete location (0.150371ms)
+✔ source evidence is escaped before rendering in the care plan (0.149218ms)
+✔ real upload parses PDF text in the browser without an API dependency (0.216045ms)
+✔ home checklist uses accessible buttons and toggles completion both ways (8.183743ms)
+✔ review items can mark follow-up done without changing their clinical review status (0.309197ms)
+✔ dashboard explanation controls exist but no explanation request runs at page load (0.217912ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 544.444304
