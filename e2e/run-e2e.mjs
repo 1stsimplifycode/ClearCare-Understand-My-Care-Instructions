@@ -47,7 +47,7 @@ const SPEECH_MOCK = () => {
   window.webkitSpeechRecognition = R; window.SpeechRecognition = R;
 };
 
-console.log("launching"); const browser = await pw.chromium.launch(); console.log("launched");
+console.log("launching"); const browser = await pw.chromium.launch(process.env.CLEARCARE_E2E_CHANNEL ? { channel: process.env.CLEARCARE_E2E_CHANNEL } : {}); console.log("launched");
 async function newPage({ mockSpeech = true, viewport = { width: 1280, height: 900 }, bypassCSP = false } = {}) {
   const ctx = await browser.newContext({ viewport, bypassCSP, acceptDownloads: true, locale: 'en-US', timezoneId: 'Asia/Kolkata' });
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());

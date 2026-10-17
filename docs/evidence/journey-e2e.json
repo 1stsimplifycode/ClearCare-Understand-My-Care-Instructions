@@ -1,0 +1,144 @@
+{
+  "ranAt": "2026-10-17T11:26:28.602Z",
+  "browser": "msedge",
+  "results": [
+    {
+      "id": "J01",
+      "name": "onboarding: language, voice, caregiver and text size are chosen and saved",
+      "status": "PASS",
+      "detail": "saved: caregiver, larger text, read-aloud off, keep plan on"
+    },
+    {
+      "id": "J02",
+      "name": "upload → Calendar Agent adds the dated follow-up and the high-risk medicine, flagged",
+      "status": "PASS",
+      "detail": "19 💊⚠⚠ 9:00 AM Follow-up"
+    },
+    {
+      "id": "J03",
+      "name": "calendar survives a page refresh (document-derived entries persist)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "J03b",
+      "name": "with “keep my care plan” chosen, the plan itself is back after a reload",
+      "status": "PASS",
+      "detail": "plan restored"
+    },
+    {
+      "id": "J04",
+      "name": "completion tracking: visit marked attended survives refresh",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "J05",
+      "name": "dose ticks for a clear medicine are shared between Calendar and Today and persist",
+      "status": "PASS",
+      "detail": "med-t9wt9:2026-10-17:0: shown in Today, kept after reload"
+    },
+    {
+      "id": "J06",
+      "name": "past visit not marked → “missed?” prompt; never assumed",
+      "status": "PASS",
+      "detail": "prompt shown"
+    },
+    {
+      "id": "J07",
+      "name": "safety gate: urgent symptom shows emergency help (no AI request)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "J08",
+      "name": "safety gate: dose change and prescribing requests are redirected (Hindi and English)",
+      "status": "PASS",
+      "detail": "EN and HI redirected"
+    },
+    {
+      "id": "J09",
+      "name": "Care Agent escalates “should I stop…” without calling AI; answers a schedule question with a trace",
+      "status": "PASS",
+      "detail": "escalated without AI; schedule answer with steps"
+    },
+    {
+      "id": "J10",
+      "name": "“Can you make that easier?” gives a simpler explanation of the instruction in focus",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "J11",
+      "name": "Hindi-English code-mixed question answered in Hindi",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "J12",
+      "name": "Kannada: lines translated (mock) with kn-IN language tags; numbers and names unchanged",
+      "status": "PASS",
+      "detail": "ಕನ್ನಡ: Important warning sign. If you have bleeding, call the clinic."
+    },
+    {
+      "id": "J13",
+      "name": "voice: Hear my day speaks, Stop interrupts immediately (no overlapping audio)",
+      "status": "PASS",
+      "detail": "{\"spoken\":1,\"cancels\":2}"
+    },
+    {
+      "id": "J14",
+      "name": "calendar voice: “Hear my calendar” gives the next verified visit and what needs confirming",
+      "status": "PASS",
+      "detail": "Here is your calendar. There are no upcoming visits on your calendar. Medicines from your papers today: Apixaban. 2 item(s) need confirming with your care team."
+    },
+    {
+      "id": "J15",
+      "name": "duplicate reminder prevention: one reminder per visit and offset",
+      "status": "PASS",
+      "detail": "fired once, not repeated"
+    },
+    {
+      "id": "J16",
+      "name": "keyboard only: reach Family calendar and choose a day without a mouse",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "J17",
+      "name": "prompt-injection PDF: injected lines quarantined, injected 10 mg dose never shown",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "id": "J18",
+      "name": "AMD authentication failure: the explanation shows an honest error, nothing crashes",
+      "status": "PASS",
+      "detail": "The AMD service rejected the request."
+    },
+    {
+      "id": "J19",
+      "name": "AI activity panel shows provider, model and request ids (mock-labelled here)",
+      "status": "PASS",
+      "detail": "panel rendered"
+    },
+    {
+      "id": "J20",
+      "name": "axe-core scan of the Calendar (WCAG 2.1 A/AA)",
+      "status": "PASS",
+      "detail": "0 violations, 0 serious/critical"
+    },
+    {
+      "id": "J21",
+      "name": "while Today/Calendar is open, the original overview never shows underneath it",
+      "status": "PASS",
+      "detail": "hidden"
+    },
+    {
+      "id": "J00",
+      "name": "no JavaScript errors during the journey",
+      "status": "PASS",
+      "detail": ""
+    }
+  ]
+}

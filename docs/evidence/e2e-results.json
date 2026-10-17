@@ -1,149 +1,149 @@
 {
-  "ranAt": "2026-10-17T08:15:22.302Z",
-  "durationMs": 16187,
-  "node": "22.22.0",
+  "ranAt": "2026-10-17T11:24:19.948Z",
+  "durationMs": 14552,
+  "node": "24.19.0",
   "chromium": "chromium",
-  "pass": 23,
+  "pass": 22,
   "fail": 0,
-  "skip": 0,
+  "skip": 1,
   "results": [
     {
       "id": "E01",
       "name": "original overview renders, no JS errors",
       "status": "PASS",
-      "detail": " [32 ms]"
+      "detail": " [28 ms]"
     },
     {
       "id": "E02",
       "name": "original \"See full plan\" modal with Explain simply (regression)",
       "status": "PASS",
-      "detail": " [306 ms]"
+      "detail": " [281 ms]"
     },
     {
       "id": "E03",
       "name": "original calendar export downloads .ics for a confirmed visit (regression)",
       "status": "PASS",
-      "detail": " [304 ms]"
+      "detail": " [336 ms]"
     },
     {
       "id": "E04",
       "name": "upload original fixture via original file input → original view + Today plan (bridge)",
       "status": "PASS",
-      "detail": " [450 ms]"
+      "detail": " [626 ms]"
     },
     {
       "id": "E05",
       "name": "Today briefing is grounded (appointment Oct 20 is upcoming; PRN acetaminophen not a task)",
       "status": "PASS",
-      "detail": " [95 ms]"
+      "detail": " [106 ms]"
     },
     {
       "id": "E06",
       "name": "switch to हिन्दी and Español: transcript, lang attributes, preference saved",
       "status": "PASS",
-      "detail": " [237 ms]"
+      "detail": " [317 ms]"
     },
     {
       "id": "E07",
       "name": "Hear my day speaks every transcript segment, normalised and verified (mock voices)",
       "status": "PASS",
-      "detail": "9 segments [144 ms]"
+      "detail": "9 segments [172 ms]"
     },
     {
       "id": "E08",
       "name": "replay a single segment and speed control change the utterance",
       "status": "PASS",
-      "detail": " [59 ms]"
+      "detail": " [160 ms]"
     },
     {
       "id": "E09",
       "name": "Hindi speech uses a Hindi voice and Devanagari text",
       "status": "PASS",
-      "detail": " [267 ms]"
+      "detail": " [374 ms]"
     },
     {
       "id": "E10",
       "name": "Explain with AMD (mock) shows verified, labelled TEST MOCK; unfaithful mock output is withheld",
       "status": "PASS",
-      "detail": " [566 ms]"
+      "detail": " [794 ms]"
     },
     {
       "id": "E11",
       "name": "Ask: Hinglish appointment, not-in-document, and AI-grounded open question",
       "status": "PASS",
-      "detail": " [301 ms]"
+      "detail": " [497 ms]"
     },
     {
       "id": "E12",
       "name": "voice question: consent prompt, visible listening state, answer produced (mock recognition)",
       "status": "PASS",
-      "detail": " [95 ms]"
+      "detail": " [132 ms]"
     },
     {
       "id": "E13",
       "name": "comprehension controls: I need clarification adds a question; Explain again changes strategy",
       "status": "PASS",
-      "detail": " [236 ms]"
+      "detail": " [351 ms]"
     },
     {
       "id": "E14",
       "name": "medication-change PDF: stop/hold in \"Do not take\", unclear items separate, injection ignored",
       "status": "PASS",
-      "detail": " [397 ms]"
+      "detail": " [454 ms]"
     },
     {
       "id": "E15",
       "name": "XSS text in a PDF is shown as text, never executed",
       "status": "PASS",
-      "detail": " [461 ms]"
+      "detail": " [393 ms]"
     },
     {
       "id": "E16",
       "name": "scanned PDF: original error modal offers local OCR; OCR plan flags medicine for checking",
-      "status": "PASS",
-      "detail": " [2131 ms]"
+      "status": "SKIP",
+      "detail": "OCR not installed: Local OCR tools (tesseract and pdftoppm) are not installed on this computer. [289 ms]"
     },
     {
       "id": "E17",
       "name": "password-protected PDF is refused with a clear message",
       "status": "PASS",
-      "detail": " [570 ms]"
+      "detail": " [617 ms]"
     },
     {
       "id": "E18",
       "name": "delete my data clears ClearCare storage",
       "status": "PASS",
-      "detail": " [94 ms]"
+      "detail": " [194 ms]"
     },
     {
       "id": "E19",
       "name": "auto-read with consent: blocked autoplay shows a clear fallback (no fake gestures)",
       "status": "PASS",
-      "detail": " [609 ms]"
+      "detail": " [851 ms]"
     },
     {
       "id": "E20",
       "name": "real headless Chromium (no voices installed): honest \"no voice\" message, text still shown",
       "status": "PASS",
-      "detail": "No voice for this language is installed in this browser, so it can’t read aloud. The text  [445 ms]"
+      "detail": "Speaking with Microsoft David - English (United States) [1599 ms]"
     },
     {
       "id": "E21",
       "name": "desktop app only: Hindi Today at 1366×900; a narrow 800 px window keeps the desktop sidebar (no phone layout)",
       "status": "PASS",
-      "detail": "{\"width\":\"253px\",\"height\":\"900px\",\"brand\":\"flex\"} [1342 ms]"
+      "detail": "{\"width\":\"253px\",\"height\":\"900px\",\"brand\":\"flex\"} [1698 ms]"
     },
     {
       "id": "E22",
       "name": "axe-core accessibility scan of Today (WCAG 2.1 A/AA rules)",
       "status": "PASS",
-      "detail": "0 violations total, 0 serious/critical [1719 ms]"
+      "detail": "0 violations total, 0 serious/critical [1993 ms]"
     },
     {
       "id": "E23",
       "name": "performance: in-browser sample PDF → plan → Today render time",
       "status": "PASS",
-      "detail": "290 ms (fetch + pdf.js + engine + render, includes original app parse) [741 ms]"
+      "detail": "220 ms (fetch + pdf.js + engine + render, includes original app parse) [864 ms]"
     }
   ]
 }

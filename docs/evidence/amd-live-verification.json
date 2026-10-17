@@ -1,0 +1,193 @@
+{
+  "ranAt": "2026-10-17T10:21:26.870Z",
+  "provider": "AMD Developer Cloud Token Factory",
+  "endpoint": "https://developer.amd.com.cn/radeon/api/v1",
+  "model": "DeepSeek-V4-Flash",
+  "requestSpacingMs": 60000,
+  "steps": [
+    {
+      "name": "AMD explanation of one discharge instruction (explain-v2)",
+      "ok": true,
+      "wallMs": 3828,
+      "status": "withheld",
+      "failures": [
+        "number_missing",
+        "pair_missing",
+        "pair_missing",
+        "prn_lost"
+      ],
+      "amdCall": {
+        "ts": "2026-10-17T10:21:30.930Z",
+        "op": "explain",
+        "outcome": "ok",
+        "status": 200,
+        "latencyMs": 3797,
+        "queueMs": 15,
+        "attempts": 1,
+        "mock": false,
+        "requestId": "bnzlIQU6uaupAUxQZcibvYZpRnVEN65DEt4PaAFE",
+        "servedModel": "DeepSeek-V4-Flash"
+      }
+    },
+    {
+      "name": "AMD Kannada translation of 12 instructions (translate, one request)",
+      "ok": true,
+      "wallMs": 159735,
+      "verified": 12,
+      "total": 12,
+      "failures": [],
+      "amdCall": {
+        "ts": "2026-10-17T10:24:10.705Z",
+        "op": "translate",
+        "outcome": "ok",
+        "status": 200,
+        "latencyMs": 99769,
+        "queueMs": 59941,
+        "attempts": 1,
+        "mock": false,
+        "requestId": "jYIlwglYQGZuPnUlrqPeOqPd9bRuaMUPeCIl014F",
+        "servedModel": "DeepSeek-V4-Flash"
+      }
+    },
+    {
+      "name": "AMD Care Agent answer (plan → tools → one AMD call → verify)",
+      "ok": true,
+      "wallMs": 69646,
+      "status": "verified",
+      "confidence": "high",
+      "tools": [
+        "day_schedule",
+        "search_document",
+        "safety_flags"
+      ],
+      "answer": "Stop aspirin until your doctor reviews it, and do not take ibuprofen. Tomorrow (10/18) you should take amoxicillin 500 mg three times daily, and you have Riya's child specialist check-up with Dr. Mehta at 10:30 at City Children Clinic.",
+      "checks": [
+        "pass: Every source was found by the agent’s tools",
+        "pass: No new numbers, units or medicines; meaning kept",
+        "pass: “Stop / hold” meanings kept",
+        "pass: Unclear instructions flagged"
+      ],
+      "amdCall": {
+        "ts": "2026-10-17T10:25:20.382Z",
+        "op": "agent",
+        "outcome": "ok",
+        "status": 200,
+        "latencyMs": 9669,
+        "queueMs": 59964,
+        "attempts": 1,
+        "mock": false,
+        "requestId": "c0gPUJ8J7EEKAZaH5W151xRWpAhptVYCfI53FNkp",
+        "servedModel": "DeepSeek-V4-Flash"
+      }
+    },
+    {
+      "name": "AMD authentication failure is reported, not hidden",
+      "ok": true,
+      "wallMs": 61040,
+      "handledAs": "provider_rejected",
+      "status": 502,
+      "amdCall": {
+        "ts": "2026-10-17T10:26:21.433Z",
+        "op": "auth-test",
+        "outcome": "provider_rejected",
+        "status": 502,
+        "latencyMs": 1042,
+        "queueMs": 59996,
+        "attempts": 1,
+        "mock": false
+      }
+    },
+    {
+      "name": "AMD timeout is reported as a timeout",
+      "ok": true,
+      "wallMs": 60018,
+      "handledAs": "timeout",
+      "status": 504,
+      "amdCall": {
+        "ts": "2026-10-17T10:27:21.451Z",
+        "op": "timeout-test",
+        "outcome": "timeout",
+        "status": 504,
+        "latencyMs": 17,
+        "queueMs": 60001,
+        "attempts": 1,
+        "mock": false
+      }
+    }
+  ],
+  "telemetry": {
+    "calls": 5,
+    "ok": 3,
+    "errors": 2,
+    "p50Ms": 9669,
+    "p95Ms": 99769,
+    "recent": [
+      {
+        "ts": "2026-10-17T10:21:30.930Z",
+        "op": "explain",
+        "outcome": "ok",
+        "status": 200,
+        "latencyMs": 3797,
+        "queueMs": 15,
+        "attempts": 1,
+        "mock": false,
+        "requestId": "bnzlIQU6uaupAUxQZcibvYZpRnVEN65DEt4PaAFE",
+        "servedModel": "DeepSeek-V4-Flash"
+      },
+      {
+        "ts": "2026-10-17T10:24:10.705Z",
+        "op": "translate",
+        "outcome": "ok",
+        "status": 200,
+        "latencyMs": 99769,
+        "queueMs": 59941,
+        "attempts": 1,
+        "mock": false,
+        "requestId": "jYIlwglYQGZuPnUlrqPeOqPd9bRuaMUPeCIl014F",
+        "servedModel": "DeepSeek-V4-Flash"
+      },
+      {
+        "ts": "2026-10-17T10:25:20.382Z",
+        "op": "agent",
+        "outcome": "ok",
+        "status": 200,
+        "latencyMs": 9669,
+        "queueMs": 59964,
+        "attempts": 1,
+        "mock": false,
+        "requestId": "c0gPUJ8J7EEKAZaH5W151xRWpAhptVYCfI53FNkp",
+        "servedModel": "DeepSeek-V4-Flash"
+      },
+      {
+        "ts": "2026-10-17T10:26:21.433Z",
+        "op": "auth-test",
+        "outcome": "provider_rejected",
+        "status": 502,
+        "latencyMs": 1042,
+        "queueMs": 59996,
+        "attempts": 1,
+        "mock": false
+      },
+      {
+        "ts": "2026-10-17T10:27:21.451Z",
+        "op": "timeout-test",
+        "outcome": "timeout",
+        "status": 504,
+        "latencyMs": 17,
+        "queueMs": 60001,
+        "attempts": 1,
+        "mock": false
+      }
+    ]
+  },
+  "multilingual": {
+    "items": 12,
+    "hindiSameNumbers": 12,
+    "hindiNameKept": 12,
+    "hindiVerifierPass": 10,
+    "kannadaVerified": 12,
+    "kannadaSameNumbers": 12,
+    "kannadaNameKept": 12,
+    "humanReview": "NOT DONE: no qualified Hindi or Kannada reviewer was available. Outputs are saved for review in multilingual-eval.json."
+  }
+}

@@ -104,3 +104,33 @@ test('calendar visits export with reminders, and untimed visits are all-day', ()
   assert.ok(lines.includes('DTSTART:20261021T103000') && lines.includes('TRIGGER:-PT1440M') && lines.includes('SUMMARY:Riya\\, check-up'));
   assert.ok(lines.includes('DTSTART;VALUE=DATE:20261102'));
 });
+
+test('Calendar Agent puts dated appointments and prescriptions on the calendar, flagging what is unclear', async () => {
+  const { syncCalendarFromPlan, medsOn } = await import('../public/ext/calendar/agent-sync.js');
+  const p = extractInstructions(pagesFromPlainText(['Medications:', 'Apixaban 5 mg: Take twice daily. Do not stop taking unless instructed by your provider.', 'Stop ibuprofen.', 'Amoxicillin 500 mg three times daily for 5 days starting October 17, 2026.', 'Follow-up:', 'Follow up with your clinician October 19, 2026 at 9:00 AM. Clinic location is not specified.', 'Return to clinic in 2 weeks.'].join('\n')));
+  const { entries, log } = syncCalendarFromPlan(p, { today: '2026-10-17', source: 'test.pdf' });
+  const visit = entries.find(e => e.kind === 'visit');
+  assert.equal(visit.date, '2026-10-19'); assert.equal(visit.time, '09:00'); assert.equal(visit.needsConfirm, true, 'missing place is flagged, not hidden');
+  assert.equal(visit.place, '', 'no place is invented');
+  const apixaban = entries.find(e => e.title === 'Apixaban');
+  assert.equal(apixaban.kind, 'med'); assert.equal(apixaban.needsConfirm, true, 'high-risk medicine is flagged');
+  assert.equal(entries.find(e => /ibuprofen/i.test(e.title)).kind, 'stop');
+  assert.ok(log.some(l => l.action === 'skipped' && /exact date/.test(l.why)), 'relative dates are skipped with a reason');
+  assert.ok(log.every(l => l.why && l.source), 'every decision is explained and quoted');
+  assert.ok(medsOn(entries, '2026-10-18').some(m => m.title === 'Apixaban'));
+});
+
+test('regressions found while preparing the demo: “No …” restrictions, typographic apostrophes, nothing hidden', () => {
+  const q = extractInstructions(pagesFromPlainText(['Care at home', 'No sports or heavy lifting for 2 weeks.', 'No known allergies.', 'Follow-up', 'Follow up with Dr. Mehta at City Children’s Clinic on October 23, 2026 at 10:30 AM.'].join('\n')));
+  assert.ok(q.items.some(i => i.category === 'activity' && /No sports/.test(i.provenance.text)), 'restriction starting with “No” is kept');
+  const a = q.items.find(i => i.category === 'appointment');
+  assert.equal(a.location, 'City Children’s Clinic'); assert.equal(a.clarity, 'clear');
+  assert.ok(q.other.some(o => /No known allergies/.test(o.text)), 'uninterpreted lines are kept for display');
+});
+
+test('Care Agent evidence includes every instruction the answer names, not only what the AI cited', async () => {
+  const fetchImpl = async () => reply({ reasoning: ['Schedule lists amoxicillin; aspirin is stopped.'], answer: 'Take amoxicillin 500 mg three times daily, and stop aspirin until your doctor reviews it.', sources: [idOf('aspirin')], confidence: 'high' });
+  const r = await runCareAgent({ question: 'What should I take today?', language: 'en', today: '2026-10-17', items, visits }, { fetchImpl, env });
+  assert.equal(r.status, 'verified');
+  assert.ok(r.sources.some(s => /Amoxicillin/i.test(s.text)), 'amoxicillin line listed as evidence');
+});

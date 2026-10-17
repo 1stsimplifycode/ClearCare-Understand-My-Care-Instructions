@@ -57,7 +57,8 @@ test('verifier rejects round-2 meaning changes (weekly/monthly, food reversal, a
 test('"can I / should I / what if" questions are answered only from the document', () => {
   const p = plan('Tramadol 50 mg every 6 hours as needed for pain.\nMetronidazole 400 mg TID for 7 days. Avoid alcohol.');
   const ctx = { plan: p, day: buildDay(p, { date: '2026-10-17' }), lang: 'en' };
-  assert.equal(answerLocally('Can I double the dose if pain is bad?', ctx).notFound, true);
+  const dbl = answerLocally('Can I double the dose if pain is bad?', ctx);
+  assert.equal(dbl.safety, 'med_change'); assert.ok(!dbl.needsAI); assert.match(dbl.answer, /can’t change how you take a medicine/);
   assert.match(answerLocally('Can I drink alcohol with metronidazole?', ctx).answer, /Avoid alcohol/);
   const q = answerLocally('How much insulin should I take if sugar is 300?', ctx); assert.equal(q.notFound, true); assert.ok(!q.needsAI);
 });
