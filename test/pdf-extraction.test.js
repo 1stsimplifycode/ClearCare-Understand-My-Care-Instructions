@@ -42,6 +42,9 @@ test('missing units and insulin trigger review', async () => {
   const result = await parse('04_missing_units_insulin.pdf');
   assert.ok(result.medications.some(m => m.name === 'Amoxicillin' && m.needsReview));
   assert.ok(result.medications.some(m => m.name === 'Insulin' && m.risk && m.needsReview));
+  const pickupIds = result.medications.map(m => `pickup-${m.id}`);
+  assert.equal(new Set(pickupIds).size, result.medications.length, 'each medication purchase must have its own checklist key');
+  assert.ok(result.medications.every(m => m.id), 'extracted medication entries need stable IDs');
 });
 
 test('high-risk medication is sent to review and missing appointment location blocks scheduling', async () => {

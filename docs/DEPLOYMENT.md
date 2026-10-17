@@ -32,7 +32,7 @@ Speech uses the voices installed in the operating system and browser. On Windows
 | Variable | Purpose |
 |---|---|
 | `RADEON_API_KEY` | AMD key. Server only. |
-| `PORT` | Default 4173 |
+| `PORT` | Default 4174 |
 | `CLEARCARE_AMD_BASE_URL` | Tests only; loopback hosts only |
 
 ## Network

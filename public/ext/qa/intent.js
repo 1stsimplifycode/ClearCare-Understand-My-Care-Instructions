@@ -4,6 +4,7 @@
 import { renderItemSafe as renderItem, reasonText, formatDate, formatTime } from '../clinical/render.js';
 import { GLOSSARY, ABBREVIATIONS } from '../clinical/vocab.js';
 import { normalizeLang } from '../i18n.js';
+import { safetyGate } from './safety.js';
 
 const L = (en, es, hi) => ({ en, es, hi });
 const pick = (o, lang) => o[lang] ?? o.en;
@@ -88,6 +89,8 @@ export function answerLocally(question, ctx) {
   const lang = normalizeLang(c.switchTo || (c.detected.script === 'devanagari' ? 'hi' : c.detected.lang === 'es' ? 'es' : ctx.lang));
   const plan = ctx.plan;
   const base = { intent: c.intent, lang, switchTo: c.switchTo, detected: c.detected.lang, items: [] };
+  const safety = safetyGate(question, { plan: ctx.plan, lang });
+  if (safety) return { ...base, safety: safety.kind, answer: safety.answer, items: safety.items || [], needsAI: false };
   if (!plan) return { ...base, answer: pick(L('Please add your discharge papers first, then I can answer from them.', 'Primero agregue sus papeles de alta y luego podré responder con ellos.', 'पहले अपने डिस्चार्ज के कागज़ जोड़ें, फिर मैं उन्हीं से जवाब दूँगा।'), lang) };
   const focus = ctx.focusItemId ? plan.items.find(i => i.id === ctx.focusItemId) : null;
   const ordinalItem = c.ordinal != null && ctx.lastItemIds?.[c.ordinal] ? plan.items.find(i => i.id === ctx.lastItemIds[c.ordinal]) : null;
